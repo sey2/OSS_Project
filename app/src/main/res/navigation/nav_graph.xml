@@ -1,0 +1,41 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="org.techtown.osshango.Fragment.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="org.techtown.osshango.Fragment.KaKaoMapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_ka_kao_map" />
+
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="org.techtown.osshango.Fragment.ChatListFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_chat_list" />
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="org.techtown.osshango.Fragment.UserInfo"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_user_info" />
+
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="hango_java.com.Fragment.ChatMsgFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat_msg" />
+
+
+
+</navigation>
