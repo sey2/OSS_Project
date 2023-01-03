@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.0'  // Firebase Store
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.android.volley:volley:1.2.0'
+    implementation files('libs/libDaumMapAndroid.jar')  // kakao map
 
     implementation "com.kakao.sdk:v2-user:2.10.0" // 카카오 로그인
 
