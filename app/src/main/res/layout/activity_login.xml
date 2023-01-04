@@ -50,6 +50,7 @@
                 android:ems="14"
                 android:inputType="textPersonName"
                 android:linksClickable="false"
+                android:text="casio2978"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -73,6 +74,7 @@
                 android:inputType="textPersonName|textPassword"
                 android:outlineProvider="none"
                 android:singleLine="false"
+                android:text="12345678"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <Button
