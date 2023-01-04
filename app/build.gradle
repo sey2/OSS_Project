@@ -3,6 +3,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 32
 
@@ -19,6 +22,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "TRAVEL_API_KEY", properties['travel_api_key']
     }
 
     buildTypes {
@@ -52,6 +56,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.10.0" // 카카오 로그인
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0' // Glide
+
 
 
     testImplementation 'junit:junit:4.13.2'
