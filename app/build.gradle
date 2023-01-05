@@ -55,6 +55,10 @@ dependencies {
 
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+' // crop Image
 
+    implementation 'com.github.stfalcon-studio:Chatkit:0.4.1'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0' // circleImageView
+
     implementation "com.kakao.sdk:v2-user:2.10.0" // 카카오 로그인
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0' // Glide

@@ -15,7 +15,7 @@
         android:id="@+id/mapFragment"
         android:name="org.techtown.osshango.Fragment.KaKaoMapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_ka_kao_map" />
+        tools:layout="@layout/fragment_kakao_map" />
 
     <fragment
         android:id="@+id/chatListFragment"
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/chatFragment"
-        android:name="hango_java.com.Fragment.ChatMsgFragment"
+        android:name="org.techtown.osshango.Fragment.ChatMsgFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat_msg" />
 
