@@ -10,16 +10,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.messages.MessagesList;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
@@ -87,15 +90,19 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
         rv = view.findViewById(R.id.messagesList);
         send_iv.setOnClickListener(this);
 
-        MessagesListAdapter<Message> adapter = new MessagesListAdapter<>(userViewModel.getUserinfo().getValue().getUserID(), null);
+        ImageLoader imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload) {
+                Glide.with(getContext()).load(url).into(imageView);
+            }
+        };
+
+        MessagesListAdapter<Message> adapter = new MessagesListAdapter<>(userViewModel.getUserinfo().getValue().getUserID(),
+                imageLoader);
         rv.setAdapter(adapter);
 
         // ChatRoomFragment 에서 받는 채팅방 이름
         chatroom = getArguments().getString("chatroom");
-       // mAdapter = new ChatAdapter(msgList, userViewModel.getUserinfo().getValue().getUserID());
-
-        //rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //rv.setAdapter(mAdapter);
 
         // Firebase Database 초기
         myRef = database.getReference(chatroom);
@@ -110,8 +117,8 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
 
                 // Database 의 정보를 ChatMsgVO 객체에 담음
                 Message chatMsgVO = dataSnapshot.getValue(Message.class);
-                chatMsgVO.setUser(new Author(userViewModel.getUserinfo().getValue().getUserID(), userViewModel.getUserinfo().getValue().getUserName(), null));
-                //msgList.add(chatMsgVO);
+                chatMsgVO.setUser(new Author(userViewModel.getUserinfo().getValue().getUserID(), userViewModel.getUserinfo().getValue().getUserName(),
+                        userViewModel.getUserinfo().getValue().getProfileUri().toString()));
 
                 // 채팅 메시지 배열에 담고 RecyclerView 다시 그리기
                 adapter.addToStart(chatMsgVO, true);

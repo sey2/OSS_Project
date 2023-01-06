@@ -14,14 +14,9 @@ public class Message implements IMessage {
     private String content;
     private Author user;
 
-    public Message(){}
-
+    public Message() {}
     public Message(String userId, String crt_dt, String content) {
         this.userId = userId;
-        // 포맷터
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
-
-        // 문자열 -> Date
         this.crt_dt = crt_dt;
         this.content = content;
     }
@@ -36,6 +31,18 @@ public class Message implements IMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getCrt_dt() {
+        return crt_dt;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     @Override
@@ -59,6 +66,13 @@ public class Message implements IMessage {
 
     @Override
     public Date getCreatedAt() {
-        return new Date("2022-02");
+        Date dt = null;    
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dt = format.parse(crt_dt);
+        }catch (ParseException e) {e.printStackTrace();}
+        
+         
+        return dt;
     }
 }
