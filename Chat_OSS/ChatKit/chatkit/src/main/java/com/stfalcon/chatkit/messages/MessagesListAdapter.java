@@ -38,6 +38,7 @@ import com.stfalcon.chatkit.commons.ViewHolder;
 import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.utils.DateFormatter;
 
+import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -349,6 +350,26 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
                 notifyDataSetChanged();
             }
         }
+    }
+
+    public MESSAGE getMessage(int idx) throws Exception {
+        if(idx >= 0)
+            return (MESSAGE) items.get(idx);
+        else
+            throw new Exception("Wrong Index.");
+
+    }
+
+    public MESSAGE getMessage(String content) throws Exception{
+        for(Wrapper item : items){
+            MESSAGE message = (MESSAGE) item;
+
+            if(message.equals(message)){
+                return (MESSAGE) items.get(0);
+            }
+        }
+
+        return null;
     }
 
     /**
