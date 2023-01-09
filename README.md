@@ -59,6 +59,16 @@ public interface SetOnClickItemListener {
 
 ```
 
+###  DialogViewHolder.class Listener MVC Pattern
+
+```java
+ deleteLayout.setOnClickListener(view -> {
+                if(listener != null){
+                    listener.onDeleteClick((BaseDialogViewHolder)DialogViewHolder.this, view, dialog.getId(), getAdapterPosition());
+                }
+            });
+```
+
 ###  DefaultDialogActivity.java Attach Listener 
 
 ```java
@@ -66,7 +76,6 @@ public interface SetOnClickItemListener {
             @Override
             public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition) {
                 dialogsAdapter.deleteById(itemId);
-                //dialogsAdapter.removeItem(itemPosition);
             }
         });
 ```
