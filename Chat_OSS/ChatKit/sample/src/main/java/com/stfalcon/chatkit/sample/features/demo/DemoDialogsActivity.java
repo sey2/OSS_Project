@@ -1,6 +1,7 @@
 package com.stfalcon.chatkit.sample.features.demo;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import com.stfalcon.chatkit.sample.utils.AppUtils;
  */
 public abstract class DemoDialogsActivity extends AppCompatActivity
         implements DialogsListAdapter.OnDialogClickListener<Dialog>,
-        DialogsListAdapter.OnDialogLongClickListener<Dialog> {
+        DialogsListAdapter.OnDialogLongClickListener<Dialog>{
 
     protected ImageLoader imageLoader;
     protected DialogsListAdapter<Dialog> dialogsAdapter;
@@ -26,6 +27,7 @@ public abstract class DemoDialogsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         imageLoader = (imageView, url, payload) -> Picasso.get().load(url).into(imageView);
+
     }
 
     @Override

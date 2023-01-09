@@ -3,9 +3,11 @@ package com.stfalcon.chatkit.sample.features.demo.def;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
+import com.stfalcon.chatkit.dialogs.SetOnClickItemListener;
 import com.stfalcon.chatkit.sample.R;
 import com.stfalcon.chatkit.sample.common.data.fixtures.DialogsFixtures;
 import com.stfalcon.chatkit.sample.common.data.model.Dialog;
@@ -40,6 +42,13 @@ public class DefaultDialogsActivity extends DemoDialogsActivity {
 
         super.dialogsAdapter.setOnDialogClickListener(this);
         super.dialogsAdapter.setOnDialogLongClickListener(this);
+        super.dialogsAdapter.setOnItemClickListener(new SetOnClickItemListener() {
+            @Override
+            public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition) {
+                dialogsAdapter.deleteById(itemId);
+                //dialogsAdapter.removeItem(itemPosition);
+            }
+        });
 
         dialogsList.setAdapter(super.dialogsAdapter);
     }

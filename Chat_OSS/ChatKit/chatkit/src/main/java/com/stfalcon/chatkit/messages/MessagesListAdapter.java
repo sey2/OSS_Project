@@ -32,13 +32,16 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.stfalcon.chatkit.R;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.ViewHolder;
 import com.stfalcon.chatkit.commons.models.IMessage;
+import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
+import com.stfalcon.chatkit.dialogs.SetOnClickItemListener;
 import com.stfalcon.chatkit.utils.DateFormatter;
 
-import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -50,7 +53,9 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public class MessagesListAdapter<MESSAGE extends IMessage>
         extends RecyclerView.Adapter<ViewHolder>
-        implements RecyclerScrollMoreListener.OnLoadMoreListener {
+        implements RecyclerScrollMoreListener.OnLoadMoreListener{
+
+    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
     protected static boolean isSelectionModeEnabled;
 
@@ -71,6 +76,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     private MessagesListStyle messagesListStyle;
     private DateFormatter.Formatter dateHeadersFormatter;
     private SparseArray<OnMessageViewClickListener> viewClickListenersArray = new SparseArray<>();
+
+    private SetOnClickItemListener listener = null;
+
+    SwipeRevealLayout swipeRevealLayout;
 
     /**
      * For default list item layout and view holder.
@@ -106,6 +115,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Wrapper wrapper = items.get(position);
+
         holders.bind(holder, wrapper.item, wrapper.isSelected, imageLoader,
                 getMessageClickListener(wrapper),
                 getMessageLongClickListener(wrapper),
@@ -481,6 +491,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         this.onMessageViewClickListener = onMessageViewClickListener;
     }
 
+    public void setOnItemClickListener(SetOnClickItemListener listener) {
+        this.listener = listener;
+    }
+
     /**
      * Registers click listener for view by id
      *
@@ -524,6 +538,8 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     public void setDateHeadersFormatter(DateFormatter.Formatter dateHeadersFormatter) {
         this.dateHeadersFormatter = dateHeadersFormatter;
     }
+
+
 
     /*
      * PRIVATE METHODS
@@ -701,6 +717,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     void setStyle(MessagesListStyle style) {
         this.messagesListStyle = style;
     }
+
 
     /*
      * WRAPPER
@@ -907,6 +924,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
 
         public BaseMessageViewHolder(View itemView) {
             super(itemView);
+
         }
 
         /**
@@ -964,10 +982,12 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         protected String dateFormat;
         protected DateFormatter.Formatter dateHeadersFormatter;
 
+
         public DefaultDateHeaderViewHolder(View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.messageText);
         }
+
 
         @Override
         public void onBind(Date date) {
@@ -976,7 +996,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
                 if (dateHeadersFormatter != null) formattedDate = dateHeadersFormatter.format(date);
                 text.setText(formattedDate == null ? DateFormatter.format(date, dateFormat) : formattedDate);
             }
+
         }
+
+
 
         @SuppressLint("WrongConstant")
         @Override
@@ -1000,7 +1023,6 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     public static class IncomingMessageViewHolder<MESSAGE extends IMessage>
             extends MessageHolders.IncomingTextMessageViewHolder<MESSAGE>
             implements MessageHolders.DefaultMessageViewHolder {
-
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
         }

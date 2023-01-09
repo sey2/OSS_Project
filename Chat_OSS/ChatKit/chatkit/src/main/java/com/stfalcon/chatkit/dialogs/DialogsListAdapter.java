@@ -29,11 +29,14 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.stfalcon.chatkit.R;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.ViewHolder;
 import com.stfalcon.chatkit.commons.models.IDialog;
 import com.stfalcon.chatkit.commons.models.IMessage;
+import com.stfalcon.chatkit.messages.MessageHolders;
 import com.stfalcon.chatkit.utils.DateFormatter;
 
 import java.lang.reflect.Constructor;
@@ -53,7 +56,7 @@ import static android.view.View.VISIBLE;
 public class DialogsListAdapter<DIALOG extends IDialog>
         extends RecyclerView.Adapter<DialogsListAdapter.BaseDialogViewHolder> {
 
-    protected List<DIALOG> items = new ArrayList<>();
+    public List<DIALOG> items = new ArrayList<>();
     private int itemLayoutId;
     private Class<? extends BaseDialogViewHolder> holderClass;
     private ImageLoader imageLoader;
@@ -63,6 +66,10 @@ public class DialogsListAdapter<DIALOG extends IDialog>
     private OnDialogViewLongClickListener<DIALOG> onDialogViewLongClickListener;
     private DialogListStyle dialogStyle;
     private DateFormatter.Formatter datesFormatter;
+
+    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
+
+    static SetOnClickItemListener listener;
 
     /**
      * For default list item layout and view holder
@@ -107,6 +114,15 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         holder.setOnDialogViewLongClickListener(onDialogViewLongClickListener);
         holder.setDatesFormatter(datesFormatter);
         holder.onBind(items.get(position));
+
+        DIALOG item = items.get(position);
+        binderHelper.setOpenOnlyOne(true);
+        binderHelper.bind(holder.swipeRevealLayout, item.getId());
+
+    }
+
+    public void setOnItemClickListener(SetOnClickItemListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -325,6 +341,10 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         return dialogExist;
     }
 
+    public void removeItem(String dialogId){
+        items.remove(dialogId);
+    }
+
     /**
      * Sort dialog by last message date
      */
@@ -364,6 +384,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
     public void setImageLoader(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }
+
 
     /**
      * @return the item click callback.
@@ -473,6 +494,11 @@ public class DialogsListAdapter<DIALOG extends IDialog>
     public abstract static class BaseDialogViewHolder<DIALOG extends IDialog>
             extends ViewHolder<DIALOG> {
 
+        public SwipeRevealLayout swipeRevealLayout;
+
+        public View deleteLayout;
+
+
         protected ImageLoader imageLoader;
         protected OnDialogClickListener<DIALOG> onDialogClickListener;
         protected OnDialogLongClickListener<DIALOG> onLongItemClickListener;
@@ -482,6 +508,8 @@ public class DialogsListAdapter<DIALOG extends IDialog>
 
         public BaseDialogViewHolder(View itemView) {
             super(itemView);
+            swipeRevealLayout = itemView.findViewById(R.id.swipe_layout);
+            deleteLayout = itemView.findViewById(R.id.delete);
         }
 
         void setImageLoader(ImageLoader imageLoader) {
@@ -507,6 +535,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         public void setDatesFormatter(DateFormatter.Formatter dateHeadersFormatter) {
             this.datesFormatter = dateHeadersFormatter;
         }
+
     }
 
     public static class DialogViewHolder<DIALOG extends IDialog> extends BaseDialogViewHolder<DIALOG> {
@@ -522,6 +551,8 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         protected ViewGroup dividerContainer;
         protected View divider;
 
+        public View deleteLayout;
+
         public DialogViewHolder(View itemView) {
             super(itemView);
             root = itemView.findViewById(R.id.dialogRootLayout);
@@ -534,6 +565,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
             ivAvatar = itemView.findViewById(R.id.dialogAvatar);
             dividerContainer = itemView.findViewById(R.id.dialogDividerContainer);
             divider = itemView.findViewById(R.id.dialogDivider);
+            this.deleteLayout = super.deleteLayout;
 
         }
 
@@ -698,6 +730,13 @@ public class DialogsListAdapter<DIALOG extends IDialog>
                 }
                 return onLongItemClickListener != null || onDialogViewLongClickListener != null;
             });
+
+            deleteLayout.setOnClickListener(view -> {
+                if(listener != null){
+                    listener.onDeleteClick((BaseDialogViewHolder)DialogViewHolder.this, view, dialog.getId(), getAdapterPosition());
+                }
+            });
+
         }
 
         protected String getDateString(Date date) {
@@ -712,5 +751,6 @@ public class DialogsListAdapter<DIALOG extends IDialog>
             this.dialogStyle = dialogStyle;
             applyStyle();
         }
+
     }
 }

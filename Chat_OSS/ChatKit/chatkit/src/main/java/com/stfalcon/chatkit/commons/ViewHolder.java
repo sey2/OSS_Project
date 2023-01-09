@@ -20,15 +20,22 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.stfalcon.chatkit.R;
+import com.stfalcon.chatkit.commons.models.IMessage;
+import com.stfalcon.chatkit.messages.MessagesListAdapter;
+
+import java.util.ArrayList;
+
 /**
  * Base ViewHolder
  */
 public abstract class ViewHolder<DATA> extends RecyclerView.ViewHolder {
+
 
     public abstract void onBind(DATA data);
 
     public ViewHolder(View itemView) {
         super(itemView);
     }
-
 }
