@@ -80,4 +80,7 @@ public interface SetOnClickItemListener {
         });
 ```
 
+---
+
+DialogsListAdapter - deleteById() 시간 복잡도 개선 
 
