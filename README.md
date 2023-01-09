@@ -38,3 +38,37 @@
     }
 
 ```
+
+---
+
+### ADD Swipe Interface
+
+```java
+public interface SetOnClickItemListener {
+
+    public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition);
+}
+
+```
+
+### DialogViewHolder.class ADD method
+```java (
+        public void setOnItemClickListener(SetOnClickItemListener listener) {
+            this.listener = listener;
+        }
+
+```
+
+###  DefaultDialogActivity.java Attach Listener 
+
+```java
+     dialogsAdapter.setOnItemClickListener(new SetOnClickItemListener() {
+            @Override
+            public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition) {
+                dialogsAdapter.deleteById(itemId);
+                //dialogsAdapter.removeItem(itemPosition);
+            }
+        });
+```
+
+
