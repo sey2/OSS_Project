@@ -69,7 +69,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
 
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    static SetOnClickItemListener listener;
+    SetOnClickItemListener listener;
 
     /**
      * For default list item layout and view holder
@@ -113,17 +113,16 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         holder.setOnLongItemClickListener(onLongItemClickListener);
         holder.setOnDialogViewLongClickListener(onDialogViewLongClickListener);
         holder.setDatesFormatter(datesFormatter);
-        holder.onBind(items.get(position));
+        holder.setOnItemClickListener(listener);
 
         DIALOG item = items.get(position);
         binderHelper.setOpenOnlyOne(true);
         binderHelper.bind(holder.swipeRevealLayout, item.getId());
 
+        holder.onBind(items.get(position));
+
     }
 
-    public void setOnItemClickListener(SetOnClickItemListener listener) {
-        this.listener = listener;
-    }
 
     @Override
     public BaseDialogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -402,6 +401,10 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         this.onDialogClickListener = onDialogClickListener;
     }
 
+    public void setOnItemClickListener(SetOnClickItemListener listener) {
+        this.listener = listener;
+    }
+
     /**
      * @return the view click callback.
      */
@@ -505,6 +508,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         protected OnDialogViewClickListener<DIALOG> onDialogViewClickListener;
         protected OnDialogViewLongClickListener<DIALOG> onDialogViewLongClickListener;
         protected DateFormatter.Formatter datesFormatter;
+        protected SetOnClickItemListener listener;
 
         public BaseDialogViewHolder(View itemView) {
             super(itemView);
@@ -527,6 +531,11 @@ public class DialogsListAdapter<DIALOG extends IDialog>
         protected void setOnLongItemClickListener(OnDialogLongClickListener<DIALOG> onLongItemClickListener) {
             this.onLongItemClickListener = onLongItemClickListener;
         }
+
+        public void setOnItemClickListener(SetOnClickItemListener listener) {
+            this.listener = listener;
+        }
+
 
         protected void setOnDialogViewLongClickListener(OnDialogViewLongClickListener<DIALOG> onDialogViewLongClickListener) {
             this.onDialogViewLongClickListener = onDialogViewLongClickListener;

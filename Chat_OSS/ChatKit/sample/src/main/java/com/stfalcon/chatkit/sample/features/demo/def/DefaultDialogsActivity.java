@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.stfalcon.chatkit.commons.models.IDialog;
 import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 import com.stfalcon.chatkit.dialogs.SetOnClickItemListener;
@@ -42,13 +44,15 @@ public class DefaultDialogsActivity extends DemoDialogsActivity {
 
         super.dialogsAdapter.setOnDialogClickListener(this);
         super.dialogsAdapter.setOnDialogLongClickListener(this);
-        super.dialogsAdapter.setOnItemClickListener(new SetOnClickItemListener() {
+
+        dialogsAdapter.setOnItemClickListener(new SetOnClickItemListener() {
             @Override
             public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition) {
                 dialogsAdapter.deleteById(itemId);
                 //dialogsAdapter.removeItem(itemPosition);
             }
         });
+
 
         dialogsList.setAdapter(super.dialogsAdapter);
     }
