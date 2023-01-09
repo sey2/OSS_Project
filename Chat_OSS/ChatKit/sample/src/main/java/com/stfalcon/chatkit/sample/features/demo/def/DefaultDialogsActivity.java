@@ -47,7 +47,7 @@ public class DefaultDialogsActivity extends DemoDialogsActivity {
 
         dialogsAdapter.setOnItemClickListener(new SetOnClickItemListener() {
             @Override
-            public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, String itemId, int getAdapterPosition) {
+            public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, int itemId, int getAdapterPosition) {
                 dialogsAdapter.deleteById(itemId);
                 //dialogsAdapter.removeItem(itemPosition);
             }
@@ -58,7 +58,7 @@ public class DefaultDialogsActivity extends DemoDialogsActivity {
     }
 
     //for example
-    private void onNewMessage(String dialogId, Message message) {
+    private void onNewMessage(int dialogId, Message message) {
         boolean isUpdated = dialogsAdapter.updateDialogWithMessage(dialogId, message);
         if (!isUpdated) {
             //Dialog with this ID doesn't exist, so you can create new Dialog or update all dialogs list

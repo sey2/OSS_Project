@@ -117,7 +117,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
 
         DIALOG item = items.get(position);
         binderHelper.setOpenOnlyOne(true);
-        binderHelper.bind(holder.swipeRevealLayout, item.getId());
+        binderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
 
         holder.onBind(items.get(position));
 
@@ -155,9 +155,9 @@ public class DialogsListAdapter<DIALOG extends IDialog>
      *
      * @param id dialog i
      */
-    public void deleteById(String id) {
+    public void deleteById(int id) {
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(id)) {
+            if (items.get(i).getId() == id) {
                 items.remove(i);
                 notifyItemRemoved(i);
             }
@@ -266,7 +266,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
             items = new ArrayList<>();
         }
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(item.getId())) {
+            if (items.get(i).getId() == item.getId()) {
                 items.set(i, item);
                 notifyItemChanged(i);
                 break;
@@ -282,7 +282,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
     public void upsertItem(DIALOG item) {
         boolean updated = false;
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(item.getId())) {
+            if (items.get(i).getId() == item.getId()) {
                 items.set(i, item);
                 notifyItemChanged(i);
                 updated = true;
@@ -301,14 +301,14 @@ public class DialogsListAdapter<DIALOG extends IDialog>
      * @return the found item, or null
      */
     @Nullable
-    public DIALOG getItemById(String id) {
+    public DIALOG getItemById(int id) {
         if (items == null) {
             items = new ArrayList<>();
         }
         for (DIALOG item : items) {
-            if (item.getId() == null && id == null) {
+            if (item.getId() < 0 && id < 0) {
                 return item;
-            } else if (item.getId() != null && item.getId().equals(id)) {
+            } else if (item.getId() > 0 && item.getId() == id) {
                 return item;
             }
         }
@@ -323,10 +323,10 @@ public class DialogsListAdapter<DIALOG extends IDialog>
      * @return false if dialog doesn't exist.
      */
     @SuppressWarnings("unchecked")
-    public boolean updateDialogWithMessage(String dialogId, IMessage message) {
+    public boolean updateDialogWithMessage(int dialogId, IMessage message) {
         boolean dialogExist = false;
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(dialogId)) {
+            if (items.get(i).getId() == dialogId) {
                 items.get(i).setLastMessage(message);
                 notifyItemChanged(i);
                 if (i != 0) {

@@ -31,7 +31,7 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
 
     private static final int TOTAL_MESSAGES_COUNT = 100;
 
-    protected final String senderId = "0";
+    protected final int senderId = 0;
     protected ImageLoader imageLoader;
     protected MessagesListAdapter<Message> messagesAdapter;
 

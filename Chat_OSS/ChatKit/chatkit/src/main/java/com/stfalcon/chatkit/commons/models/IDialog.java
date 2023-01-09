@@ -24,7 +24,7 @@ import java.util.List;
 
 public interface IDialog<MESSAGE extends IMessage> {
 
-    String getId();
+    int getId();
 
     String getDialogPhoto();
 

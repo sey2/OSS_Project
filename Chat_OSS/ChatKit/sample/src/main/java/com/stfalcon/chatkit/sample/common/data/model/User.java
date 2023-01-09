@@ -7,12 +7,12 @@ import com.stfalcon.chatkit.commons.models.IUser;
  */
 public class User implements IUser {
 
-    private String id;
+    private int id;
     private String name;
     private String avatar;
     private boolean online;
 
-    public User(String id, String name, String avatar, boolean online) {
+    public User(int id, String name, String avatar, boolean online) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -20,7 +20,7 @@ public class User implements IUser {
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 

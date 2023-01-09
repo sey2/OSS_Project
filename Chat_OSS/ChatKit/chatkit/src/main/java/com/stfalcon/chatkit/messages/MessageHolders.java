@@ -592,13 +592,13 @@ public class MessageHolders {
     }
 
 
-    protected int getViewType(Object item, String senderId) {
+    protected int getViewType(Object item, int senderId) {
         boolean isOutcoming = false;
         int viewType;
 
         if (item instanceof IMessage) {
             IMessage message = (IMessage) item;
-            isOutcoming = message.getUser().getId().contentEquals(senderId);
+            isOutcoming = (message.getUser().getId() == senderId) ? true : false;
             viewType = getContentViewType(message);
 
         } else viewType = VIEW_TYPE_DATE_HEADER;

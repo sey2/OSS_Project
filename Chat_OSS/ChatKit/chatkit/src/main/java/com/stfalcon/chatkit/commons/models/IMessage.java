@@ -28,7 +28,7 @@ public interface IMessage {
      *
      * @return the message id
      */
-    String getId();
+    int getId();
 
     /**
      * Returns message text

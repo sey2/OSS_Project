@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Dialog implements IDialog<Message> {
 
-    private String id;
+    private int id;
     private String dialogPhoto;
     private String dialogName;
     private ArrayList<User> users;
@@ -17,7 +17,7 @@ public class Dialog implements IDialog<Message> {
 
     private int unreadCount;
 
-    public Dialog(String id, String name, String photo,
+    public Dialog(int id, String name, String photo,
                   ArrayList<User> users, Message lastMessage, int unreadCount) {
 
         this.id = id;
@@ -29,7 +29,7 @@ public class Dialog implements IDialog<Message> {
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 

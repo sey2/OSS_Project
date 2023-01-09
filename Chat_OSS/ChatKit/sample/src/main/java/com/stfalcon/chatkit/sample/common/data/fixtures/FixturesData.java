@@ -10,6 +10,7 @@ import java.util.UUID;
 abstract class FixturesData {
 
     static SecureRandom rnd = new SecureRandom();
+    static int idCount = 0;
 
     static ArrayList<String> avatars = new ArrayList<String>() {
         {
@@ -75,8 +76,9 @@ abstract class FixturesData {
         }
     };
 
-    static String getRandomId() {
-        return Long.toString(UUID.randomUUID().getLeastSignificantBits());
+    static int getRandomId() {
+      //  return Long.toString(UUID.randomUUID().getLeastSignificantBits());
+        return idCount++;
     }
 
     static String getRandomAvatar() {
