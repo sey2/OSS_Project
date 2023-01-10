@@ -41,7 +41,7 @@
 
 ---
 
-### ADD Swipe Interface
+### ADD Swipe Interface (Utility Expension)
 
 ```java
 public interface SetOnClickItemListener {
@@ -82,5 +82,54 @@ public interface SetOnClickItemListener {
 
 ---
 
-DialogsListAdapter - deleteById() 시간 복잡도 개선 
+### DialogsListAdapter - deleteById() 시간 복잡도 개선 
+
+#### Before O(n)
+```java
+    public void deleteById(String id) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+                items.remove(i);
+                notifyItemRemoved(i);
+            }
+        }
+    }
+
+```
+
+<br><br>
+<p align="center"> Modify DTO and related methods </p>
+<p align="center"> <img width="389" src="https://user-images.githubusercontent.com/54762273/211431826-5d14b3cb-8d64-4bca-897e-68a0f9def123.png"> </p>
+
+#### After O(logn)
+
+```java
+ public void deleteById(int id) {
+        int idx = binarySerach(id, 0, items.size());
+        items.remove(idx);
+        notifyItemRemoved(idx);
+    }
+
+
+    public int binarySerach(int key, int low, int high){
+        int mid;
+
+        if(low <= high) {
+            mid = (low + high) / 2;
+            int cur = items.get(mid).getId();
+
+            if(key == cur) {
+                return mid;
+            } else if(key < cur) {
+                return binarySerach(key ,low, mid-1);
+            } else {
+                return binarySerach(key, mid+1, high);
+            }
+        }
+
+        throw new IndexOutOfBoundsException("Invalidate Key");
+
+    }
+```
+
 
