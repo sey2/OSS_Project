@@ -49,7 +49,6 @@ public class DefaultDialogsActivity extends DemoDialogsActivity {
             @Override
             public void onDeleteClick(DialogsListAdapter.BaseDialogViewHolder holder, View view, int itemId, int getAdapterPosition) {
                 dialogsAdapter.deleteById(itemId);
-                //dialogsAdapter.removeItem(itemPosition);
             }
         });
 

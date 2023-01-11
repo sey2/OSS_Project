@@ -137,7 +137,7 @@ public class DialogsListAdapter<DIALOG extends IDialog>
             }
             return baseDialogViewHolder;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
         return null;
     }
