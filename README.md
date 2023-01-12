@@ -132,4 +132,21 @@ public interface SetOnClickItemListener {
     }
 ```
 
+----
+#### Fix to load avatar image bug
+
+The demo app has a bug that does not load avatar images. <br>
+Because avatar image use http url. <br>
+Therefore, it should be specified in the manifest file as follows.
+
+``` xml
+
+    <application
+        ...
+        android:usesCleartextTraffic="true">
+```
+
+
+
+
 
