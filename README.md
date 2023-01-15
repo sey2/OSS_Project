@@ -1,18 +1,8 @@
 # OSS_Project 
 
-채팅 앱 오픈소스를 분석하고 개선합니다.
+채팅 앱 오픈소스를 개선하고 개선사항을 기록합니다.
 
 ---
-
-|단위|크기|
-|------|---|
-|1Byte|8bit|
-|1KB|1024byte|
-|1MB|1024KB|
-|1GB|1024MB|
-|1TB|1024GB|
-
-----
 
 ## ADD Function (MessageAdapterList.java)
 
@@ -153,6 +143,88 @@ Information exposure through an error message
 ```java
 e.printStackTrace(); -> System.out.println(e);
 ```
+---
+### Send Album image
+Before the improvement, the source could only send the image url uploaded to the server, <br>
+but after the improvement, the image can be selected from the album and sent immediately.
 
+In addition, the cropper function has been added to edit the selected image in the album.
 
+#### Change ImageLoader interface 
 
+```java
+void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload, @Nullable Bitmap bitmap);
+```
+
+<br>
+
+####  Change Image class and Add getImageBitmap() Method in Message class
+
+```java
+  public Bitmap getImageBitmap() {return image == null ? null : image.bitmap;}
+
+   public static class Image {
+
+        private String url;
+        private Bitmap bitmap;
+
+        public Image(String url) {
+            this.url = url;
+        }
+        public Image(Bitmap bitmap) {this.bitmap = bitmap; }
+    }
+
+```
+
+<br>
+
+#### Change getContentViewType Method in MessageHoder.class
+
+```java
+    private short getContentViewType(IMessage message) {
+        if (message instanceof MessageContentType.Image
+                && ((MessageContentType.Image) message).getImageUrl() != null
+                || ((MessageContentType.Image) message).getImageBitmap() != null) {
+            return VIEW_TYPE_IMAGE_MESSAGE;
+        }
+
+```
+
+<br>
+
+#### Change to ImageLoader Listener in Activity
+
+```java
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload, @Nullable Bitmap bitmap) {
+                if(url == null)
+                    imageView.setImageBitmap(bitmap);
+                else
+                     Picasso.get().load(url).into(imageView);
+
+            }
+        };
+```
+
+<br>
+
+#### Change to onBind() Method in MessageHolders.class
+
+``` java
+  @Override
+        public void onBind(MESSAGE message) {
+            super.onBind(message);
+            if (image != null && imageLoader != null) {
+                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message), message.getImageBitmap());
+            }
+
+            if (imageOverlay != null) {
+                imageOverlay.setSelected(isSelected());
+            }
+        }
+```
+
+<br>
+
+####  <a href =" https://github.com/sey2/OSS_Project/commit/a333013f221fee56a125e91eb3d05acdad0e1ab2"> ETC Commit Log  </a>
