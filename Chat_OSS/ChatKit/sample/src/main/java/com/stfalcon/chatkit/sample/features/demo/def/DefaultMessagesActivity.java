@@ -1,9 +1,15 @@
 package com.stfalcon.chatkit.sample.features.demo.def;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.stfalcon.chatkit.messages.MessageInput;
 import com.stfalcon.chatkit.messages.MessagesList;
@@ -12,6 +18,10 @@ import com.stfalcon.chatkit.sample.R;
 import com.stfalcon.chatkit.sample.common.data.fixtures.MessagesFixtures;
 import com.stfalcon.chatkit.sample.features.demo.DemoMessagesActivity;
 import com.stfalcon.chatkit.sample.utils.AppUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.InputStream;
 
 public class DefaultMessagesActivity extends DemoMessagesActivity
         implements MessageInput.InputListener,
@@ -47,8 +57,12 @@ public class DefaultMessagesActivity extends DemoMessagesActivity
 
     @Override
     public void onAddAttachments() {
-        super.messagesAdapter.addToStart(
-                MessagesFixtures.getImageMessage(), true);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra("crop",true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(intent, 104);
     }
 
     private void initAdapter() {
@@ -71,4 +85,6 @@ public class DefaultMessagesActivity extends DemoMessagesActivity
     public void onStopTyping() {
         Log.v("Typing listener", getString(R.string.stop_typing_status));
     }
+
+
 }

@@ -16,6 +16,8 @@
 
 package com.stfalcon.chatkit.commons.models;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.Nullable;
 
 import com.stfalcon.chatkit.messages.MessageHolders;
@@ -36,6 +38,9 @@ public interface MessageContentType extends IMessage {
     interface Image extends IMessage {
         @Nullable
         String getImageUrl();
+
+        @Nullable
+        Bitmap getImageBitmap();
     }
 
     // other default types will be here

@@ -16,6 +16,7 @@
 
 package com.stfalcon.chatkit.commons;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,6 @@ import androidx.annotation.Nullable;
  */
 public interface ImageLoader {
 
-    void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload);
+    void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload, @Nullable Bitmap bitmap);
 
 }

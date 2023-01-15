@@ -2,6 +2,8 @@
     package="com.stfalcon.chatkit.sample">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -36,6 +38,9 @@
             android:name=".features.demo.custom.media.CustomMediaMessagesActivity"
             android:theme="@style/BlueTheme" />
 
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- 크롭 액티비티 -->
     </application>
 
 </manifest>

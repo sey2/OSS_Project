@@ -1,7 +1,9 @@
 package com.stfalcon.chatkit.sample.features.demo;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +28,16 @@ public abstract class DemoDialogsActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        imageLoader = (imageView, url, payload) -> Picasso.get().load(url).into(imageView);
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload, @Nullable Bitmap bitmap) {
+                if(url == null)
+                    imageView.setImageBitmap(bitmap);
+                else
+                     Picasso.get().load(url).into(imageView);
+
+            }
+        };
 
     }
 

@@ -640,7 +640,8 @@ public class MessageHolders {
     @SuppressWarnings("unchecked")
     private short getContentViewType(IMessage message) {
         if (message instanceof MessageContentType.Image
-                && ((MessageContentType.Image) message).getImageUrl() != null) {
+                && ((MessageContentType.Image) message).getImageUrl() != null
+                || ((MessageContentType.Image) message).getImageBitmap() != null) {
             return VIEW_TYPE_IMAGE_MESSAGE;
         }
 
@@ -877,7 +878,7 @@ public class MessageHolders {
         public void onBind(MESSAGE message) {
             super.onBind(message);
             if (image != null && imageLoader != null) {
-                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
+                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message), message.getImageBitmap());
             }
 
             if (imageOverlay != null) {
@@ -947,7 +948,7 @@ public class MessageHolders {
         public void onBind(MESSAGE message) {
             super.onBind(message);
             if (image != null && imageLoader != null) {
-                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
+                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message), message.getImageBitmap());
             }
 
             if (imageOverlay != null) {
@@ -1064,7 +1065,7 @@ public class MessageHolders {
 
                 userAvatar.setVisibility(isAvatarExists ? View.VISIBLE : View.GONE);
                 if (isAvatarExists) {
-                    imageLoader.loadImage(userAvatar, message.getUser().getAvatar(), null);
+                    imageLoader.loadImage(userAvatar, message.getUser().getAvatar(), null, null);
                 }
             }
         }

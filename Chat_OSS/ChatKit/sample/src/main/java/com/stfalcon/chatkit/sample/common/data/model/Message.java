@@ -1,5 +1,7 @@
 package com.stfalcon.chatkit.sample.common.data.model;
 
+import android.graphics.Bitmap;
+
 import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.commons.models.MessageContentType;
 
@@ -55,6 +57,8 @@ public class Message implements IMessage,
         return image == null ? null : image.url;
     }
 
+    public Bitmap getImageBitmap() {return image == null ? null : image.bitmap;}
+
     public Voice getVoice() {
         return voice;
     }
@@ -82,10 +86,12 @@ public class Message implements IMessage,
     public static class Image {
 
         private String url;
+        private Bitmap bitmap;
 
         public Image(String url) {
             this.url = url;
         }
+        public Image(Bitmap bitmap) {this.bitmap = bitmap; }
     }
 
     public static class Voice {

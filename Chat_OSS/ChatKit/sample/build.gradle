@@ -51,4 +51,7 @@ dependencies {
     //Utils
     implementation "me.relex:circleindicator:1.2.2@aar"
 
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 }
+
+tasks.register("prepareKotlinBuildScriptModel"){}

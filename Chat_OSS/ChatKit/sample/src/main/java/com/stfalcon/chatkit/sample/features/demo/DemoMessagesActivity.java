@@ -1,10 +1,17 @@
 package com.stfalcon.chatkit.sample.features.demo;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +23,10 @@ import com.stfalcon.chatkit.sample.R;
 import com.stfalcon.chatkit.sample.common.data.fixtures.MessagesFixtures;
 import com.stfalcon.chatkit.sample.common.data.model.Message;
 import com.stfalcon.chatkit.sample.utils.AppUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +53,19 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        imageLoader = (imageView, url, payload) -> Picasso.get().load(url).into(imageView);
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload, @Nullable Bitmap bitmap) {
+                if(url == null) {
+                    imageView.setImageBitmap(bitmap);
+                    Log.d("test", bitmap.toString());
+                }
+                else {
+                    Log.d("test", url);
+                    Picasso.get().load(url).into(imageView);
+                }
+            }
+        };
     }
 
     @Override
@@ -118,6 +140,46 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
             return String.format(Locale.getDefault(), "%s: %s (%s)",
                     message.getUser().getName(), text, createdAt);
         };
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case 104:  // 사진을 앨범에서 선택하는 경우
+                if(resultCode == this.RESULT_OK) {
+                    Uri imgUri = intent.getData();
+                    CropImage.activity(imgUri).setGuidelines(CropImageView.Guidelines.ON).start( this);
+                }
+
+                break;
+
+            /* 자른 사진을 pictureImageView에 적용 */
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                CropImage.ActivityResult result = CropImage.getActivityResult(intent);
+                if (result != null) {
+                    Uri resultUri = result.getUri();
+
+                    ContentResolver resolver = getApplicationContext().getContentResolver();
+
+                    try {
+                        InputStream instream = resolver.openInputStream(resultUri);
+                        Bitmap resultPhotoBitmap = BitmapFactory.decodeStream(instream);
+                        Log.d("test", "calss Activity reuslt");
+
+                        messagesAdapter.addToStart(
+                                MessagesFixtures.getImageMessage(resultPhotoBitmap), true);
+
+                        instream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                }
+
+        }
     }
 
 }

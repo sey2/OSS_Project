@@ -1,5 +1,8 @@
 package com.stfalcon.chatkit.sample.common.data.fixtures;
 
+import android.graphics.Bitmap;
+import android.util.Log;
+
 import com.stfalcon.chatkit.sample.common.data.model.Message;
 import com.stfalcon.chatkit.sample.common.data.model.User;
 
@@ -18,6 +21,12 @@ public final class MessagesFixtures extends FixturesData {
     public static Message getImageMessage() {
         Message message = new Message(getRandomId(), getUser(), null);
         message.setImage(new Message.Image(getRandomImage()));
+        return message;
+    }
+
+    public static Message getImageMessage(Bitmap bitmap) {
+        Message message = new Message(getRandomId(), getUser(), null);
+        message.setImage(new Message.Image(bitmap));
         return message;
     }
 
