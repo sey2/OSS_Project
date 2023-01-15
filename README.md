@@ -145,8 +145,14 @@ Therefore, it should be specified in the manifest file as follows.
         ...
         android:usesCleartextTraffic="true">
 ```
+----
+### Security
 
+Information exposure through an error message
 
+```java
+e.printStackTrace(); -> System.out.println(e);
+```
 
 
 
