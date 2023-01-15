@@ -227,4 +227,4 @@ void loadImage(ImageView imageView, @Nullable String url, @Nullable Object paylo
 
 <br>
 
-####  <a href =" https://github.com/sey2/OSS_Project/commit/a333013f221fee56a125e91eb3d05acdad0e1ab2"> ETC Commit Log  </a>
+<a href="https://github.com/sey2/OSS_Project/commit/a333013f221fee56a125e91eb3d05acdad0e1ab2"> ETC Commit Log </a>
