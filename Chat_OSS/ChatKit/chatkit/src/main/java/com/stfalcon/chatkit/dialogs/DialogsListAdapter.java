@@ -155,13 +155,40 @@ public class DialogsListAdapter<DIALOG extends IDialog>
      *
      * @param id dialog i
      */
+//    public void deleteById(int id) {
+//        for (int i = 0; i < items.size(); i++) {
+//            if (items.get(i).getId() == id) {
+//                items.remove(i);
+//                notifyItemRemoved(i);
+//            }
+//        }
+//    }
+
     public void deleteById(int id) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId() == id) {
-                items.remove(i);
-                notifyItemRemoved(i);
+        int idx = binarySerach(id, 0, items.size());
+        items.remove(idx);
+        notifyItemRemoved(idx);
+    }
+
+
+    public int binarySerach(int key, int low, int high){
+        int mid;
+
+        if(low <= high) {
+            mid = (low + high) / 2;
+            int cur = items.get(mid).getId();
+
+            if(key == cur) { // 탐색 성공
+                return mid;
+            } else if(key < cur) {
+                return binarySerach(key ,low, mid-1);
+            } else {
+                return binarySerach(key, mid+1, high);
             }
         }
+
+        throw new IndexOutOfBoundsException("Invalidate Key");
+
     }
 
     /**
