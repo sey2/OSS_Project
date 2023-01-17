@@ -46,7 +46,7 @@ public final class MessagesFixtures extends FixturesData {
 
     public static ArrayList<Message> getMessages(Date startDate) {
         ArrayList<Message> messages = new ArrayList<>();
-        for (int i = 0; i < 10/*days count*/; i++) {
+        for (int i = 0; i < 1000/*days count*/; i++) {
             int countPerDay = rnd.nextInt(5) + 1;
 
             for (int j = 0; j < countPerDay; j++) {

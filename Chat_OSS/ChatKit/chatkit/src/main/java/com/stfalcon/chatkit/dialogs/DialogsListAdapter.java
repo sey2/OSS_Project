@@ -18,6 +18,7 @@ package com.stfalcon.chatkit.dialogs;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,8 +166,11 @@ public class DialogsListAdapter<DIALOG extends IDialog>
 //    }
 
     public void deleteById(int id) {
+        long start = System.nanoTime();
         int idx = binarySerach(id, 0, items.size());
         items.remove(idx);
+        long end = System.nanoTime();
+        Log.d("test","수행시간: "  + (end - start));
         notifyItemRemoved(idx);
     }
 

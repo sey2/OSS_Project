@@ -19,7 +19,7 @@ public final class DialogsFixtures extends FixturesData {
     public static ArrayList<Dialog> getDialogs() {
         ArrayList<Dialog> chats = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100000; i++) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_MONTH, -(i * i));
             calendar.add(Calendar.MINUTE, -(i * i));
